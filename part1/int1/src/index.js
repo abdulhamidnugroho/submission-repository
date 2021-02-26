@@ -1,6 +1,30 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by press the fckin btn
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      button press history: {props.allClicks.join(' ')}
+    </div>
+  )
+}
+
+const Button = ({ onClick, text }) => {
+  return (
+    <button onClick={onClick}>
+      {text}
+    </button>
+  )
+}
+
 const App = () => {
   const [left, setLeft] = useState(0)
   const [right, setRight] = useState(0)
@@ -19,13 +43,10 @@ const App = () => {
   return (
     <div>
       {left}
-      <button onClick={handleLeft}>
-        left
-      </button>
-      <button onClick={handleRight}>
-        right
-      </button>
+      <Button onClick={handleLeft} text='left'/>
+      <Button onClick={handleRight} text='right'/>
       {right}
+      <History allClicks={allClicks} />
       <p>{allClicks.join(' ')}</p>
     </div>
   )
