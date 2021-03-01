@@ -52,37 +52,6 @@ const App = () => {
   )
 }
 
-<<<<<<< HEAD
-const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts : [
-      {
-        name: 'Fundamental of React',
-        exercise: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercise: 7
-      },
-      {
-        name: 'State of a component',
-        exercise: 14
-      }
-    ]
-  }
-
-	return (
-		<div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
-		</div>
-	)
-}
-
-=======
->>>>>>> e4b738d52d59798673f95c977ceafae097d3446b
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
