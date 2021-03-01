@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const Statistic = ({ statistic, text }) => {
+const Feedback = ({ statistic, text }) => {
   return (
     <p>{text} {statistic}</p>
+  )
+}
+
+const Statistic = ({ good, neutral, bad }) => {
+  return (
+    <div>
+      <p>All {good+bad+neutral}</p>
+      <p>Average {(good-bad)/(good+bad+neutral)}</p>
+      <p>Positive {100*good/(good+bad+neutral)}</p>
+    </div>
   )
 }
 
@@ -21,12 +31,10 @@ const App = () => {
       <button onClick={()=>setBad(bad+1)} type="button">bad</button>
 
       <h1>statistics</h1>
-      <Statistic statistic={good} text='good' />
-      <Statistic statistic={neutral} text='neutral' />
-      <Statistic statistic={bad} text='bad' />
-      <Statistic statistic={good+bad+neutral} text='all' />
-      <Statistic statistic={(good-bad)/(good+bad+neutral)} text='average' />
-      <Statistic statistic={100*good/(good+bad+neutral)} text='positive' />
+      <Feedback statistic={good} text='good' />
+      <Feedback statistic={neutral} text='neutral' />
+      <Feedback statistic={bad} text='bad' />
+      <Statistic good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
