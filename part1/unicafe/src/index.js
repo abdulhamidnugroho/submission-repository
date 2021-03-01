@@ -45,13 +45,6 @@ const Statistics = ({ good, neutral, bad }) => {
           </tr>
         </tbody>
       </table>
-      {/* <Statistic statistic={good} text="Good"/>
-      <Statistic statistic={neutral} text="Neutral"/>
-      <Statistic statistic={bad} text="Bad"/> */}
-{/* 
-      <p>All : {good+bad+neutral}</p>
-      <p>Average : {(good-bad)/(good+bad+neutral)}</p>
-      <p>Positive : {100*good/(good+bad+neutral)}</p> */}
     </div>
   )
 }
