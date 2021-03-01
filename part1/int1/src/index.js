@@ -1,40 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = (props) => {
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by press the fckin btn
+      </div>
+    )
+  }
+
   return (
     <div>
-      <h1>{props.course}</h1>
+      button press history: {props.allClicks.join(' ')}
     </div>
   )
 }
 
-const Part = (props) => {
+const Button = ({ onClick, text }) => {
+  return (
+    <button onClick={onClick}>
+      {text}
+    </button>
+  )
+}
+
+const App = () => {
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
+
+  const handleLeft = () => {
+    setAll(allClicks.concat('L'))
+    setLeft(left + 1)
+  }
+
+  const handleRight = () => {
+    setAll(allClicks.concat('R'))
+    setRight(right + 1)
+  }
+
   return (
     <div>
-      <p>{props.part.name} {props.part.exercise}</p>
+      {left}
+      <Button onClick={handleLeft} text='left'/>
+      <Button onClick={handleRight} text='right'/>
+      {right}
+      <History allClicks={allClicks} />
+      <p>{allClicks.join(' ')}</p>
     </div>
   )
 }
 
-const Content = (props) => {
-  return (
-    <div>
-      <Part part={props.parts[0]} />
-      <Part part={props.parts[1]} />
-      <Part part={props.parts[2]} />
-    </div>
-  )
-}
-
-const Total = (props) => {
-  return (
-    <div>
-      <p>Number of exercises {props.parts[0].exercise + props.parts[1].exercise + props.parts[2].exercise}</p>
-    </div>
-  )
-}
-
+<<<<<<< HEAD
 const App = () => {
   const course = {
     name: 'Half Stack application development',
@@ -63,6 +81,8 @@ const App = () => {
 	)
 }
 
+=======
+>>>>>>> e4b738d52d59798673f95c977ceafae097d3446b
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
