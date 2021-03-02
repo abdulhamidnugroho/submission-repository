@@ -9,16 +9,19 @@ const App = (props) => {
     const arr = [...vote]
     arr[selected]=arr[selected]+1
     setVote(arr)
-
   }
+
   return (
     <div>
+      <h1>Anecdotes of the Day</h1>
       <p>{props.anecdotes[selected]}</p>
       <p>Index : {selected} || Has {vote[selected]} Votes</p>
       <p>[{vote.toString()}]</p>
       <button onClick={voteFn}>Vote</button>
       <button onClick={() => { setSelected(Math.floor(Math.random() * (props.anecdotes.length)))}}>Next Anecdotes</button>
-
+      <h1>Anecdote with the most votes</h1>
+      <p>{props.anecdotes[vote.indexOf(Math.max(...vote))]}</p>
+      <p>Highest value is in index: {vote.indexOf(Math.max(...vote))} || with {Math.max(...vote)} votes</p>
     </div>
   )
 }
