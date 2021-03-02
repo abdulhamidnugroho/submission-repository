@@ -1,0 +1,8 @@
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTTP 302 Response (Redirect)
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: main.js HTTP 304 (Not Modified)
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: data.js HTTP 200 (OK)
+
