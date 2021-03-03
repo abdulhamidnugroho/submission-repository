@@ -1,55 +1,66 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
-const History = (props) => {
-  if (props.allClicks.length === 0) {
-    return (
-      <div>
-        the app is used by press the fckin btn
-      </div>
-    )
-  }
-
+const Header = (props) => {
   return (
     <div>
-      button press history: {props.allClicks.join(' ')}
+      <h1>{props.course}</h1>
     </div>
   )
 }
 
-const Button = ({ onClick, text }) => {
+const Part = (props) => {
   return (
-    <button onClick={onClick}>
-      {text}
-    </button>
+    <div>
+      <p>{props.part.name} {props.part.exercise}</p>
+    </div>
+  )
+}
+
+const Content = (props) => {
+  return (
+    <div>
+      <Part part={props.parts[0]} />
+      <Part part={props.parts[1]} />
+      <Part part={props.parts[2]} />
+    </div>
+  )
+}
+
+const Total = (props) => {
+  return (
+    <div>
+      <p>Number of exercises {props.parts[0].exercise + props.parts[1].exercise + props.parts[2].exercise}</p>
+    </div>
   )
 }
 
 const App = () => {
-  const [left, setLeft] = useState(0)
-  const [right, setRight] = useState(0)
-  const [allClicks, setAll] = useState([])
-
-  const handleLeft = () => {
-    setAll(allClicks.concat('L'))
-    setLeft(left + 1)
+  const course = {
+    name: 'Half Stack application development',
+    parts : [
+      {
+        name: 'Fundamental of React',
+        exercise: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercise: 7
+      },
+      {
+        name: 'State of a component',
+        exercise: 14
+      }
+    ]
   }
 
-  const handleRight = () => {
-    setAll(allClicks.concat('R'))
-    setRight(right + 1)
-  }
-
-  return (
-    <div>
-      {left}
-      <Button onClick={handleLeft} text='left'/>
-      <Button onClick={handleRight} text='right'/>
-      {right}
-      <History allClicks={allClicks} />
-      <p>{allClicks.join(' ')}</p>
-    </div>
-  )
+	return (
+		<div>
+      <Header course={course.name} />
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
+		</div>
+	)
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
