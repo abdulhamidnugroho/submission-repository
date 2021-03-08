@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 const Header = (props) => {
   return (
     <div>
-      <h1>{props.name}</h1>
+      <h2>{props.name}</h2>
     </div>
   )
 }
@@ -32,7 +32,7 @@ const Total = parts => {
 
   return (
     <div>
-      <p>TOTAL of {total} Exercises</p>
+      <p><b>TOTAL of {total} Exercises</b></p>
     </div>
   )
 }
@@ -48,33 +48,58 @@ const Course = (props) => {
 }
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts : [
-      {
-        name: 'Fundamental of React',
-        exercise: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercise: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercise: 14,
-        id: 3
-      },
-      {
-        name: 'Saga',
-        exercise: 12,
-        id: 3
-      }
-    ]
-  }
+  const course = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts : [
+        {
+          name: 'Fundamental of React',
+          exercise: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercise: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercise: 14,
+          id: 3
+        },
+        {
+          name: 'Saga',
+          exercise: 12,
+          id: 3
+        }
+      ]
+    },
+    {
+      name: 'Node.js',
+      id: 2,
+      parts : [
+        {
+          name: 'Routing',
+          exercise: 10,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercise: 7,
+          id: 2
+        },
+      ]
+    }
+  ]
 
-	return <Course course={course} />
+	return (
+        <div>
+            <h1>Web development curriculum</h1>
+            <Course course={course[0]} />
+            <Course course={course[1]} />
+        </div>
+    )
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
