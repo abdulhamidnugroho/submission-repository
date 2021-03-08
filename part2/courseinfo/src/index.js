@@ -96,8 +96,9 @@ const App = () => {
 	return (
         <div>
             <h1>Web development curriculum</h1>
-            <Course course={course[0]} />
-            <Course course={course[1]} />
+            {course.map((course) => 
+                <Course course={course} />
+            )}
         </div>
     )
 }
