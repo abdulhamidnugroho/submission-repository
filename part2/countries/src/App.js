@@ -5,12 +5,20 @@ import Countries from './components/Countries';
 const App = () => {
   const [countries, setCountries] = useState([])
   const [search, setSearch] = useState('')
-
+  const [show, setShow] = useState()
+  
   const filter = countries.filter(el => el.name.toLowerCase().includes(search.toLowerCase()))
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value)
-    console.log(search)
+    setShow()
+  }
+
+  const handleShow = event => {
+
+    const show_one = filter.filter(el => el.name.includes(event.target.value))
+    console.log(show_one)
+    setShow(show_one)
   }
 
   useEffect(() => {
@@ -25,7 +33,7 @@ const App = () => {
 	return (
     <div>
       find countries : <input value={search} onChange={handleSearchChange}/>
-      <Countries filter={filter} />
+      <Countries filter={filter} show={show} handleShow={handleShow}/>
   
     </div>
   )
