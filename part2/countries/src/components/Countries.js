@@ -1,10 +1,11 @@
-const Countries = ({filter, show, handleShow}) => {
-  console.log(show)
+const Countries = ({filter, show, handleShow, weather}) => {
+  
   if (filter.length >= 10) {
     return <p>Too many matches, specify another filter.</p>
   }
 
-  if (typeof show !== 'undefined') {
+  if (typeof show !== 'undefined' && typeof weather !== 'undefined') {
+    console.log(show)
     return (
       <div>
         <h1>{show[0].name}</h1>
@@ -17,6 +18,10 @@ const Countries = ({filter, show, handleShow}) => {
           )}
         </ul>
         <img src={show[0].flag} alt="img" width="200" />
+        <h2>Weather in {show[0].capital}</h2>
+        <p><b>temperature: </b>{weather.main.temp} Celcius</p>
+        <img alt="img" src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`} />
+        <p><b>wind speed: </b>{weather.wind.speed}</p>
       </div>
     )
   }
@@ -35,7 +40,8 @@ const Countries = ({filter, show, handleShow}) => {
     )
   }
 
-  if (filter.length === 1) {
+  if (filter.length === 1 && typeof weather !== 'undefined') {
+    console.log(weather)
     return (
       <div>
         <h1>{filter[0].name}</h1>
@@ -48,11 +54,15 @@ const Countries = ({filter, show, handleShow}) => {
           )}
         </ul>
         <img src={filter[0].flag} alt="img" width="200" />
+        <h2>Weather in {filter[0].capital}</h2>
+        <p><b>temperature: </b>{weather.main.temp} Celcius</p>
+        <img alt="img" src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`} />
+        <p><b>wind speed: </b>{weather.wind.speed}</p>
       </div>
     )
   }
 
-  return <p>No matches</p>
+  return <p>No matches or Wait for API</p>
   
 }
 

@@ -6,6 +6,7 @@ const App = () => {
   const [countries, setCountries] = useState([])
   const [search, setSearch] = useState('')
   const [show, setShow] = useState()
+  const [weather, setWeather] = useState()
   
   const filter = countries.filter(el => el.name.toLowerCase().includes(search.toLowerCase()))
 
@@ -30,10 +31,29 @@ const App = () => {
       })
   }, [])
 
+  useEffect(() => {
+    if (filter.length === 1) {
+      axios
+      .get(`http://api.openweathermap.org/data/2.5/weather?q=${filter[0].capital}&units=metric&appid=${process.env.REACT_APP_API_KEY}`)
+      .then(response => {
+        console.log(response.data)
+        setWeather(response.data)
+      })      
+    } else if (typeof show !== 'undefined') {
+      axios
+      .get(`http://api.openweathermap.org/data/2.5/weather?q=${show[0].capital}&units=metric&appid=${process.env.REACT_APP_API_KEY}`)
+      .then(response => {
+        console.log(response.data)
+        setWeather(response.data)
+      }) 
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
 	return (
     <div>
       find countries : <input value={search} onChange={handleSearchChange}/>
-      <Countries filter={filter} show={show} handleShow={handleShow}/>
+      <Countries filter={filter} show={show} handleShow={handleShow} weather={weather}/>
   
     </div>
   )
