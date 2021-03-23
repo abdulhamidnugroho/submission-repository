@@ -39,6 +39,21 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  const handleDelete = (event) => {
+    event.preventDefault()
+
+    const parsedValue = parseInt(event.target.value)
+
+    if (window.confirm("Do you really want to delete this record?")) {
+      personsService
+        .destroy(parsedValue)
+        .then(() => {
+          setPersons(persons.filter(el => el.id !== parsedValue))
+          console.log(persons)
+        })
+    }
+  }
+
   useEffect(() => {
     personsService
       .getAll()
@@ -60,7 +75,7 @@ const App = () => {
         onChangeNumber={handleNumberChange} 
       />
       <h2>Numbers</h2>
-      <Persons persons={persons.filter(el => el.name.toLowerCase().includes(filter))} />
+      <Persons persons={persons.filter(el => el.name.toLowerCase().includes(filter))} handleDelete={handleDelete} />
     </div>
   )
 }
