@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
-import PersonForm from './components/PersonForm';
-import axios from 'axios';
+import PersonForm from './components/PersonForm'
+import personsService from './services/persons'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
@@ -17,9 +17,11 @@ const App = () => {
       number: newNumber
     }
 
-    persons.some(el => el.name === newName)
+    persons.some(el => el.name.toLowerCase() === newName.toLowerCase())
       ? alert(`${newName} is already added to phonebook`) 
-      : setPersons(persons.concat(personObject))
+      : personsService
+        .create(personObject)
+        .then(returnedPerson => setPersons(persons.concat(returnedPerson)))
 
     setNewName('')
     setNewNumber('')
@@ -38,14 +40,11 @@ const App = () => {
   }
 
   useEffect(() => {
-    console.log('this effect hooks')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+    personsService
+      .getAll()
+      .then(initialPersons => setPersons(initialPersons))
   }, [])
+
   console.log('render ', persons.length, ' persons')
   
   return (
