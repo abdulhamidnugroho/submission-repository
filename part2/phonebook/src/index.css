@@ -37,3 +37,14 @@ li {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.error {
+  color: red;
+  background: rgb(134, 131, 131);
+  font-size: 17px;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 2px;
+  padding: 10px;
+  margin-bottom: 10px;
+}

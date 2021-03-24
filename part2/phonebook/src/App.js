@@ -10,7 +10,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
-  const [ successMessage, setSuccessMessage ] = useState()
+  const [ message, setMessage ] = useState()
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -30,15 +30,24 @@ const App = () => {
 
         personsService
           .update(person.id, updatedPerson)
-          .then(editedPerson => 
-            setPersons(persons.map(el => el.id !== person.id 
-              ? el 
-              : editedPerson)
-            )
+          .then(editedPerson => {
+              setPersons(persons.map(el => el.id !== person.id 
+                ? el 
+                : editedPerson)
+              )
+              setMessage({
+                success: true,
+                message: `Updated ${newName}`
+              })
+              setTimeout(() => setMessage(null), 5000)
+            }
           )
-          .then(() => {
-            setSuccessMessage(`Updated ${newName}`)
-            setTimeout(() => setSuccessMessage(null), 5000)
+          .catch(() => {
+            setMessage({
+              success: false,
+              message: `Information of ${newName} has already been removed from server`
+            })
+            setTimeout(() => setMessage(null), 5000)
           })
       }
     } else {
@@ -46,10 +55,13 @@ const App = () => {
 
       personsService
         .create(personObject)
-        .then(returnedPerson => setPersons(persons.concat(returnedPerson)))
-        .then(() => {
-          setSuccessMessage(`Added ${newName}`)
-          setTimeout(() => setSuccessMessage(null), 5000)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setMessage({
+            success: true,
+            message: `Added ${newName}`
+          })
+          setTimeout(() => setMessage(null), 5000)
         })
     }
 
@@ -95,7 +107,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Notification message={successMessage} />
+      <Notification message={message} />
       <Filter filter={filter} onChange={handleFilterChange} />
       <h2>Add a New</h2>
       <PersonForm 
