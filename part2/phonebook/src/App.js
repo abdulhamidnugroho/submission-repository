@@ -3,12 +3,14 @@ import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import personsService from './services/persons'
+import Notification from './components/Notification';
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
+  const [ successMessage, setSuccessMessage ] = useState()
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -31,14 +33,24 @@ const App = () => {
           .then(editedPerson => 
             setPersons(persons.map(el => el.id !== person.id 
               ? el 
-              : editedPerson)))
+              : editedPerson)
+            )
+          )
+          .then(() => {
+            setSuccessMessage(`Updated ${newName}`)
+            setTimeout(() => setSuccessMessage(null), 5000)
+          })
       }
     } else {
       console.log('create')
-      
+
       personsService
         .create(personObject)
         .then(returnedPerson => setPersons(persons.concat(returnedPerson)))
+        .then(() => {
+          setSuccessMessage(`Added ${newName}`)
+          setTimeout(() => setSuccessMessage(null), 5000)
+        })
     }
 
     setNewName('')
@@ -82,7 +94,8 @@ const App = () => {
   
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Notification message={successMessage} />
       <Filter filter={filter} onChange={handleFilterChange} />
       <h2>Add a New</h2>
       <PersonForm 
