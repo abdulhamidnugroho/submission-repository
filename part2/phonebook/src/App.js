@@ -17,11 +17,29 @@ const App = () => {
       number: newNumber
     }
 
-    persons.some(el => el.name.toLowerCase() === newName.toLowerCase())
-      ? alert(`${newName} is already added to phonebook`) 
-      : personsService
+    const check = persons.some(el => el.name.toLowerCase() === newName.toLowerCase())
+
+    if (check) {
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        console.log('update', personObject)
+
+        const person = persons.find(el => el.name.toLowerCase() === newName.toLowerCase())
+        const updatedPerson = { ...person, number: newNumber}
+
+        personsService
+          .update(person.id, updatedPerson)
+          .then(editedPerson => 
+            setPersons(persons.map(el => el.id !== person.id 
+              ? el 
+              : editedPerson)))
+      }
+    } else {
+      console.log('create')
+      
+      personsService
         .create(personObject)
         .then(returnedPerson => setPersons(persons.concat(returnedPerson)))
+    }
 
     setNewName('')
     setNewNumber('')
